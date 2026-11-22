@@ -22,7 +22,12 @@ export default function SignInPage() {
 
     setPending(false);
     if (error) {
-      setError("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+      // 401 = بيانات الدخول خاطئة. أي خطأ آخر نعرض سببه حتى يسهل حلّه
+      setError(
+        error.status === 401
+          ? "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+          : `تعذّر تسجيل الدخول: ${error.message ?? error.code}`,
+      );
       return;
     }
     router.push("/appointments");
